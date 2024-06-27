@@ -32,14 +32,8 @@ def create_account(index: int):
         post_response = session.post(signup_url, data=payload, headers=headers)
         
         if post_response.url == url:
-            message = f"Account {index} already exists"
-        else:
-            message = f"Account {index} created"
-        
-        return JSONResponse(content={"message": message})
+            return {"message": f"Account {index} already exists"}
+        return {"message": f"Account {index} created"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        # Redirect to the next account creation
-        return RedirectResponse(url=f"/create-account/{index + 1}")
+        return {"message": "error"}
 
